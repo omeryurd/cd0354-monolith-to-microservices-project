@@ -23,6 +23,7 @@ jobs:
 
      # build the application image
      - run: |
+        TAG=0.1.$CIRCLE_BUILD_NUM
         echo "< Pushing images to dockerhub. >"
         echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
         docker push keepinmind805/udagram-api-feed:$TAG
