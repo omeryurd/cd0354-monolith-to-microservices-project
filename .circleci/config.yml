@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+ build:
+   machine:
+    image: ubuntu-2204:2022.10.2
+   steps:
+     - checkout
+     # start proprietary DB using private Docker image
+     # with credentials stored in the UI
+     - run: |
+        echo "< Building images. >"
+        TAG=0.1.$CIRCLE_BUILD_NUM
+        docker build -t udagram-api-feed ./udagram-api-feed
+        docker tag udagram-api-feed keepinmind805/udagram-api-feed:$TAG
+        docker build -t udagram-api-user ./udagram-api-user
+        docker tag udagram-api-user keepinmind805/udagram-api-user:$TAG
+        
+        docker build -t udagram-frontend ./udagram-frontend
+        docker tag udagram-frontend keepinmind805/udagram-frontend:$TAG
+        docker build -t udagram-reverseproxy ./udagram-reverseproxy
+        docker tag udagram-reverseproxy keepinmind805/udagram-reverseproxy:$TAG
+
+     # build the application image
+     - run: |
+        echo "< Pushing images to dockerhub. >"
+        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+        docker push keepinmind805/udagram-api-feed:$TAG
+        docker push keepinmind805/udagram-api-user:$TAG
+        docker push keepinmind805/udagram-frontend:$TAG
+        docker push keepinmind805/udagram-reverseproxy:$TAG
+workflows:
+  # Name of workflow
+  build_and_push:
+    # List of jobs that will run
+    jobs:
+      - build
