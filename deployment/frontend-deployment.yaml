@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: keepinmind805/udagram-frontend:0.1.7
+        image: keepinmind805/udagram-frontend:0.1.8
         ports:
           - containerPort: 80
         imagePullPolicy: Always

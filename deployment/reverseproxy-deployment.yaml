@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: reverseproxy
-        image: keepinmind805/udagram-reverseproxy:0.1.7
+        image: keepinmind805/udagram-reverseproxy:0.1.8
         imagePullPolicy: Always               
         ports:
         - containerPort: 8080
