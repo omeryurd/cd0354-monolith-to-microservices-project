@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: keepinmind805/udagram-api-feed:0.1.7
+        image: keepinmind805/udagram-api-feed:0.1.8
         ports:
           - containerPort: 8080
         imagePullPolicy: Always     
@@ -61,8 +61,8 @@ spec:
               key: AWS_PROFILE
         - name: JWT_SECRET
           valueFrom:
-            configMapKeyRef:
-              name: env-configmap
+            secretKeyRef:
+              name: env-secret
               key: JWT_SECRET
         - name: URL
           valueFrom:
