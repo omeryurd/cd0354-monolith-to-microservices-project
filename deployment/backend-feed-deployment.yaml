@@ -19,7 +19,12 @@ spec:
         image: keepinmind805/udagram-api-feed:0.1.8
         ports:
           - containerPort: 8080
-        imagePullPolicy: Always     
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m     
         envFrom:
         - configMapRef:
             name: env-configmap
@@ -69,4 +74,12 @@ spec:
             configMapKeyRef:
               name: env-configmap
               key: URL
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true
       restartPolicy: Always
+      volumes:
+      - name: aws-secret
+        secret:
+          secretName: aws-secret
