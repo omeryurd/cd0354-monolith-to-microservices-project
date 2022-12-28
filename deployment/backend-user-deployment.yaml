@@ -19,7 +19,12 @@ spec:
         image: keepinmind805/udagram-api-user:0.1.8
         ports:
           - containerPort: 8080
-        imagePullPolicy: Always  
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m 
         envFrom:
         - configMapRef:
             name: env-configmap
